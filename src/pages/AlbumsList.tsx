@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { api } from "../libs/axios";
 
 import { Album } from "../@types/Album";
@@ -34,8 +35,9 @@ export function AlbumsList() {
                 <h1 className="text-2xl font-bold text-center text-zinc-800">
                     Lista de Álbuns
                 </h1>
+
                 {isLoading && (
-                    <h2 className="text-xl text-zinc-800">Carregando...</h2>
+                    <AiOutlineLoading3Quarters className="animate-spin text-4xl self-center text-sky-600 mt-4" />
                 )}
 
                 {!isLoading && (

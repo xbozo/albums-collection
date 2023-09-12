@@ -3,14 +3,10 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { api } from "../libs/axios";
 
-import { Album } from "../@types/Album";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
-interface Photo {
-    albumId: number;
-    id: number;
-    title: string;
-    thumbnailUrl: string;
-}
+import { Album } from "../@types/Album";
+import { Photo } from "../@types/Photo";
 
 export function AlbumPhotos() {
     const { albumId } = useParams();
@@ -20,7 +16,7 @@ export function AlbumPhotos() {
     const [isLoading, setIsLoading] = useState(true);
 
     function fetchAlbum() {
-        // para setar o título do álbum
+        // buscar o álbum pra obter seu título
         api.get(`/albums/${albumId}`)
             .then((response) => {
                 setAlbum(response.data);
@@ -53,30 +49,46 @@ export function AlbumPhotos() {
     console.log(album);
 
     return (
-        <div>
-            {isLoading && <h1>Carregando...</h1>}
+        <div className="w-full h-full mt-6">
+            <div className="max-w-5xl mx-auto flex flex-col gap-3">
+                <h1 className="text-2xl font-bold text-center text-zinc-800">
+                    Detalhes do Álbum
+                </h1>
 
-            {!isLoading && (
-                <>
-                    <h1>Detalhes do Álbum</h1>
-                    <h2>Título: {album?.title}</h2>
+                {isLoading && (
+                    <AiOutlineLoading3Quarters className="animate-spin text-4xl self-center text-sky-600 mt-4" />
+                )}
 
-                    <h3>Fotos</h3>
-                    <ul>
-                        {photos.map((photo) => (
-                            <li key={photo.id}>
-                                <img
-                                    src={photo.thumbnailUrl}
-                                    alt={photo.title}
-                                />
-                                <p>{photo.title}</p>
-                            </li>
-                        ))}
-                    </ul>
+                {!isLoading && (
+                    <>
+                        <h2 className="text-xl font-bold text-zinc-800 mt-4">
+                            Título: {album?.title}
+                        </h2>
 
-                    <Link to="/">Voltar para a lista de álbuns</Link>
-                </>
-            )}
+                        <h3 className="text-xl font-bold text-zinc-800">
+                            Possui: {photos.length} fotos
+                        </h3>
+                        <ul className="flex flex-col gap-5">
+                            {photos.map((photo) => (
+                                <li key={photo.id} className="flex-1">
+                                    <p className="text-lg">{photo.title}</p>
+                                    <img
+                                        src={photo.thumbnailUrl}
+                                        alt={photo.title}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
+
+                        <Link
+                            to="/"
+                            className="p-3 bg-red-500 text-center text-white font-extrabold rounded m-2 hover:bg-red-600"
+                        >
+                            <button>Voltar para a lista de álbuns</button>
+                        </Link>
+                    </>
+                )}
+            </div>
         </div>
     );
 }
