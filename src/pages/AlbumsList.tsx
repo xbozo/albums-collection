@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { Album } from "../@types/Album";
+
 import { api } from "../libs/axios";
+
+import { Album } from "../@types/Album";
+import { AlbumsListItem } from "../components/AlbumsListItem";
 
 export function AlbumsList() {
     const [albums, setAlbums] = useState<Album[]>([]);
@@ -20,30 +22,30 @@ export function AlbumsList() {
     useEffect(() => {
         fetchAlbums();
 
-        // delay intencional pra visualizar o loading
+        // delay intencional para visualizar o loading
         setTimeout(() => {
             setIsLoading(false);
         }, 1000);
     }, []);
 
     return (
-        <div>
-            <h1>Lista de Álbuns</h1>
-            {isLoading && <h2>Carregando...</h2>}
-            <ul>
-                {!isLoading && (
-                    <>
-                        {albums.map((album) => (
-                            <li key={album.id}>
-                                {/* Crie um link para os detalhes do álbum com o ID do álbum na URL */}
-                                <Link to={`/album/${album.id}`}>
-                                    {album.title}
-                                </Link>
-                            </li>
-                        ))}
-                    </>
+        <div className="w-full h-full mt-6">
+            <div className="max-w-5xl mx-auto flex flex-col gap-3">
+                <h1 className="text-2xl font-bold text-center text-zinc-800">
+                    Lista de Álbuns
+                </h1>
+                {isLoading && (
+                    <h2 className="text-xl text-zinc-800">Carregando...</h2>
                 )}
-            </ul>
+
+                {!isLoading && (
+                    <ul className="flex flex-wrap gap-3 flex-1">
+                        {albums.map((album) => (
+                            <AlbumsListItem key={album.id} album={album} />
+                        ))}
+                    </ul>
+                )}
+            </div>
         </div>
     );
 }

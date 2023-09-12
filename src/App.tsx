@@ -1,5 +1,5 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { AlbumDetails } from "./pages/AlbumDetails";
+import { AlbumPhotos } from "./pages/AlbumPhotos";
 import { AlbumsList } from "./pages/AlbumsList";
 
 export function App() {
@@ -7,7 +7,7 @@ export function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<AlbumsList />} />
-                <Route path="/album/:albumId" element={<AlbumDetails />} />
+                <Route path="/album/:albumId" element={<AlbumPhotos />} />
             </Routes>
         </BrowserRouter>
     );

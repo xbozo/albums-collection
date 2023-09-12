@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
+
 import { Link, useParams } from "react-router-dom";
-import { Album } from "../@types/Album";
 import { api } from "../libs/axios";
+
+import { Album } from "../@types/Album";
 
 interface Photo {
     albumId: number;
@@ -10,7 +12,7 @@ interface Photo {
     thumbnailUrl: string;
 }
 
-export function AlbumDetails() {
+export function AlbumPhotos() {
     const { albumId } = useParams();
 
     const [album, setAlbum] = useState<Album | null>(null);
